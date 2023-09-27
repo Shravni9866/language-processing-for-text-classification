@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Classification</title>
+</head>
+<body>
+    <h1>Text Classification</h1>
+    <textarea id="textInput" rows="4" cols="50"></textarea><br>
+    <button onclick="classifyText()">Classify</button>
+    <p id="result"></p>
+    
+    <script>
+        function classifyText() {
+            const text = document.getElementById('textInput').value;
+            
+            fetch('/classify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: text }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = 'Classification result: ' + data.result;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
